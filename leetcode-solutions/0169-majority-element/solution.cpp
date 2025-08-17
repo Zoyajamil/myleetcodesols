@@ -1,27 +1,42 @@
+// Problem: Majority Element (LeetCode 169)
+// Link: https://leetcode.com/problems/majority-element/
+
 class Solution {
 public:
-    int majorityElement(vector<int>& nums) {
-        // Step 1: Find the size of the input array
-        int n = nums.size();
+    int majorityElement(vector<int>& v) {
 
-        // Step 2: Create a map to count frequencies of elements
-        map<int, int> mpp;
+        // size of the given array:
+        int n = v.size();
+        int cnt = 0; // count
+        int el;      // Element
 
-        // Step 3: Loop through the array and count each element
+        // Step 1: Boyer-Moore Voting Algorithm
         for (int i = 0; i < n; i++) {
-            mpp[nums[i]]++;  // increment the count of nums[i]
-        }
-
-        // Step 4: Check the map for an element whose count > n/2
-        for (auto it : mpp) {
-            if (it.second > n / 2) {
-                return it.first;  // return the majority element
+            if (cnt == 0) {
+                // when count is 0, set new element as candidate
+                cnt = 1;
+                el = v[i];
+            }
+            else if (el == v[i]) {
+                // if current element matches candidate, increase count
+                cnt++;
+            }
+            else {
+                // otherwise decrease count
+                cnt--;
             }
         }
 
-        // Step 5: If no majority element exists (the problem guarantees one),
-        // we can return -1, but this line will never be executed on LeetCode.
-        return -1;
+        // Step 2: Verify if the stored element is majority
+        int cnt1 = 0;
+        for (int i = 0; i < n; i++) {
+            if (v[i] == el) cnt1++;
+        }
+
+        // majority element must appear more than n/2 times
+        if (cnt1 > (n / 2)) return el;
+
+        return -1; // not a majority (though LeetCode guarantees there is one)
     }
 };
 
