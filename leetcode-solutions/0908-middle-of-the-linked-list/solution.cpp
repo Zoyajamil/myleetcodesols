@@ -1,36 +1,36 @@
-/*
-Definition of singly linked list:
-struct ListNode
-{
-    int val;
-    ListNode *next;
-    ListNode()
-    {
-        val = 0;
-        next = NULL;
-    }
-    ListNode(int data1)
-    {
-        val = data1;
-        next = NULL;
-    }
-    ListNode(int data1, ListNode *next1)
-    {
-        val = data1;
-        next = next1;
-    }
-};
-*/
-
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ *//**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
     ListNode* middleNode(ListNode* head) {
-        ListNode* slow=head;
-        ListNode* fast=head;
-        while(fast!=NULL && fast->next!=NULL){
-            slow=slow->next;
-            fast=fast->next->next;
+        ListNode* slow = head;
+        ListNode* fast = head;
+
+        // Tortoise & Hare Algorithm
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;        // move slow one step
+            fast = fast->next->next;  // move fast two steps
         }
-    return slow;
+
+        return slow; // slow is now at the middle node
     }
 };
+
+
