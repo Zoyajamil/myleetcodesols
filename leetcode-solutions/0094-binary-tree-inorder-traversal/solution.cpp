@@ -12,7 +12,7 @@
 //Define the TreeNode structure
 
 
-class Solution {
+/*class Solution {
 public:
 
 // Function to perform inorder traversal
@@ -51,4 +51,55 @@ vector<int> inorderTraversal(TreeNode* root){
     return inorder;
 }
 
+};*/
+
+#include <vector>
+using namespace std;
+
+class Solution{
+public:
+
+    vector<int> inorderTraversal(TreeNode* root){
+    
+    vector<int> inorder;
+    TreeNode* cur = root;
+
+    while(cur!=NULL){
+
+        //case 1 no left child
+        if(cur->left ==NULL){
+            inorder.push_back(cur->val);
+            cur=cur->right;
+        }
+
+        else{
+            //find inorder predecessor
+            TreeNode* prev=cur->left;
+
+
+            while(prev->right!=NULL && prev->right!=cur){
+                prev=prev->right;
+            }
+
+            //make temporary thread
+            if(prev->right==NULL){
+                prev->right=cur;
+                cur=cur->left;
+            }
+
+            else{
+                //remove thread 
+                prev->right=NULL;
+                inorder.push_back(cur->val);
+                cur=cur->right;
+            }
+
+        }
+    }
+
+    return inorder;
+    }
+
 };
+
+
