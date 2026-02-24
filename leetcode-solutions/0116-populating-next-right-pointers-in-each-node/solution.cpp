@@ -17,27 +17,32 @@ public:
 */
 
 // LeetCode: Populating Next Right Pointers in Each Node II
-#include <queue>
-using namespace std;
 
-// Definition for a Node is provided by LeetCode:
-// class Node { public: int val; Node* left; Node* right; Node* next; };
-
-class Solution {
+class Solution{
 public:
-    Node* connect(Node* root) {
-        if (!root) return nullptr;
-        Node* level = root;
-        while (level) {
-            Node dummy(0);
-            Node* tail = &dummy;
-            for (Node* curr = level; curr; curr = curr->next) {
-                if (curr->left) { tail->next = curr->left; tail = tail->next; }
-                if (curr->right){ tail->next = curr->right; tail = tail->next; }
+    
+    Node* connect(Node* root){
+        if(!root) return NULL;
+
+        queue<Node*> q;
+        q.push(root);
+
+        while(!q.empty()){
+            int size=q.size();
+
+            for(int i=0;i<size;i++){
+                Node* curr=q.front();
+                q.pop();
+            
+            if(i<size-1){
+                curr->next=q.front();
             }
-            level = dummy.next;
+
+            if(curr->left)q.push(curr->left);
+            if(curr->right)q.push(curr->right);
+            }
         }
         return root;
     }
-};
 
+};
