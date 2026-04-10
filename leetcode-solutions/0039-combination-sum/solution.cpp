@@ -1,39 +1,25 @@
 class Solution {
 public:
-    void backtrack(int index, int target,
-                   vector<int>& candidates,
-                   vector<int>& current,
-                   vector<vector<int>>& result) {
-
-        // if target becomes 0, store the combination
-        if (target == 0) {
-            result.push_back(current);
+    void findcombination(int ind,int target,vector<int> &arr,vector<vector<int>> &ans, vector<int> &ds) {
+        if(ind==arr.size()){
+            if(target==0){
+                ans.push_back(ds);
+            }
             return;
         }
 
-        // if index is out of bounds or target is negative
-        if (index == candidates.size() || target < 0)
-            return;
-
-        // pick the current element (can be reused)
-        if (candidates[index] <= target) {
-            current.push_back(candidates[index]);
-            backtrack(index, target - candidates[index],
-                      candidates, current, result);
-            current.pop_back(); // backtrack
+        if(arr[ind]<=target){
+            ds.push_back(arr[ind]);
+            findcombination(ind,target-arr[ind],arr,ans,ds);
+            ds.pop_back();
         }
-
-        // skip the current element
-        backtrack(index + 1, target,
-                  candidates, current, result);
+        findcombination(ind+1,target,arr,ans,ds);
     }
-
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<vector<int>> result;
-        vector<int> current;
-
-        backtrack(0, target, candidates, current, result);
-        return result;
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target){
+        vector<vector<int>> ans;
+        vector<int> ds;
+        findcombination(0,target,candidates,ans,ds);
+        return ans;
     }
 };
-
