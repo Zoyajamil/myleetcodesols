@@ -13,23 +13,22 @@
 using namespace std;
 
 class Solution {
-public:
-    
-    void dfs(TreeNode* node, int level, vector<int>& res) {
-        if (!node) return;
-        
-        // If visiting this level for the first time
-        if (res.size() == level)
+private:
+    void dfs(TreeNode* node, int level, vector<int>& res){
+        if(!node) return;
+
+        if(res.size() == level){
             res.push_back(node->val);
-        
-        // Visit right first
-        dfs(node->right, level + 1, res);
-        dfs(node->left, level + 1, res);
+        }
+
+        dfs(node->right,level+1,res);
+        dfs(node->left,level+1,res);
     }
+public:
     
     vector<int> rightSideView(TreeNode* root) {
         vector<int> res;
-        dfs(root, 0, res);
+        dfs(root,0,res);
         return res;
     }
 };
