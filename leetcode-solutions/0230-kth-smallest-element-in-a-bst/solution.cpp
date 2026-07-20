@@ -11,54 +11,16 @@
  */
 class Solution {
 public:
-
-    void inorder(TreeNode* root,int& k,int& ans){
-        if(!root) return;
-
-        inorder(root->left,k,ans);
-
-        k--;
-        if(k==0){
-            ans=root->val;
-            return;
-        }
-
-        inorder(root->right,k,ans);
+    vector<int> list; 
+    int kthSmallest(TreeNode* root, int k) {
+        inorder(root);
+        return list[k-1];
     }
 
-
-    int kthSmallest(TreeNode* root, int k) {
-        int ans=-1;
-        inorder(root,k,ans);
-        return ans;
+    void inorder(TreeNode* root){
+        if(!root) return ;
+        inorder(root->left);
+        list.push_back(root->val);
+        inorder(root->right);
     }
 };
-
-
-
-
-//kth largesttt
-/*class Solution {
-public:
-
-    void inorder(TreeNode* root,int& k,int& ans){
-        if(!root) return;
-
-        inorder(root->right,k,ans);
-
-        k--;
-        if(k==0){
-            ans=root->val;
-            return;
-        }
-
-        inorder(root->left,k,ans);
-    }
-
-
-    int kthSmallest(TreeNode* root, int k) {
-        int ans=-1;
-        inorder(root,k,ans);
-        return ans;
-    }
-};*/
