@@ -10,22 +10,21 @@
  */
 class Solution {
 public:
-
-    ListNode* merge(ListNode* l1,ListNode* l2){
+    ListNode* merge(ListNode* l, ListNode* r){
         ListNode dummy(-1);
-        ListNode* temp=&dummy;
+        ListNode* temp= &dummy;
 
-        while(l1 && l2){
-            if(l1->val<=l2->val){
-                temp->next=l1;
-                l1=l1->next;
+        while(l && r){
+            if(l->val < r->val){
+                temp->next=l;
+                l=l->next;
             }else{
-                temp->next=l2;
-                l2=l2->next;
+                temp->next=r;
+                r=r->next;
             }
-            temp=temp->next;
+        temp= temp->next;
         }
-        temp->next=(l1) ? l1 : l2;
+        temp->next= (l) ? l : r;
         return dummy.next;
     }
 
@@ -39,18 +38,15 @@ public:
         }
         return slow;
     }
-
     ListNode* sortList(ListNode* head) {
-        if(!head || !head->next) return head; //if only one element 
+        if(!head || !head->next) return head;
 
-        //split list
-
-        ListNode* mid=findmid(head);
-        ListNode* righthead=mid->next;
+        ListNode* mid= findmid(head);
+        ListNode* righthead= mid->next;
         mid->next=NULL;
-        ListNode* lefthead=head;
-         
-        lefthead=sortList(lefthead);
+        ListNode* lefthead= head;
+
+        lefthead= sortList(lefthead);
         righthead=sortList(righthead);
         return merge(lefthead,righthead);
     }
